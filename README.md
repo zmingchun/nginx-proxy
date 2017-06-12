@@ -21,6 +21,25 @@ docker run  \
 neilpang/nginx-proxy
 ```
 
+It's recommended to run with `--net=host` option, like:
+
+```sh
+docker run  \
+-p 80:80 \
+-p 443:443 \
+-it  -d --rm  \
+-v /var/run/docker.sock:/tmp/docker.sock:ro  \
+-v $(pwd)/proxy/certs:/etc/nginx/certs \
+-v $(pwd)/proxy/acme:/acmecerts \
+-v $(pwd)/proxy/conf.d:/etc/nginx/conf.d \
+--name proxy \
+--net=host \
+neilpang/nginx-proxy
+```
+
+For a docker compose v2 or v3 project, every project has a dedicated network, so, you must use `--net=host` option,  so that it can proxy any projects on you machine.
+
+
 
 ### 2. Run an internal webserver
 
