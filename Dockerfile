@@ -42,5 +42,8 @@ RUN wget -O- https://get.acme.sh | sh
 VOLUME ["/acmecerts"]
 EXPOSE 443
 
+RUN mkdir -p /etc/nginx/stream.d && echo "include /etc/nginx/stream.d/*.conf;" >> /etc/nginx/nginx.conf
+VOLUME ["/etc/nginx/stream.d"]
+
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
 CMD ["forego", "start", "-r"]
