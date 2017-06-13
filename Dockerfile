@@ -31,7 +31,11 @@ ENV DOCKER_HOST unix:///tmp/docker.sock
 
 VOLUME ["/etc/nginx/certs"]
 
-RUN mkdir -p /etc/nginx/stream.d && echo "include /etc/nginx/stream.d/*.conf;" >> /etc/nginx/nginx.conf
+
+RUN mkdir -p /etc/nginx/stream.d && echo "stream { \
+include /etc/nginx/stream.d/*.conf; \
+}" >> /etc/nginx/nginx.conf
+
 VOLUME ["/etc/nginx/stream.d"]
 
 
