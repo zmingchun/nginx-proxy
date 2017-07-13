@@ -36,7 +36,7 @@ ENV ACME_BUILD_DATE=2017-06-09
 ENV AUTO_UPGRADE=1
 ENV LE_WORKING_DIR=/acme.sh
 ENV LE_CONFIG_HOME=/acmecerts
-RUN wget -O- https://get.acme.sh | sh
+RUN wget -O- https://get.acme.sh | sh && crontab -l | sed 's#> /dev/null##' | crontab -
 
 VOLUME ["/acmecerts"]
 EXPOSE 443
