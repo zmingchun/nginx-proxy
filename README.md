@@ -40,6 +40,23 @@ neilpang/nginx-proxy
 For a docker compose v2 or v3 project, every project has a dedicated network, so, you must use `--net=host` option,  so that it can proxy any projects on you machine.
 
 
+#### Docker Compose
+```yaml
+version: '2'
+
+services:
+  nginx-proxy:
+    image: neilpang/nginx-proxy
+    ports:
+      - "80:80"
+      volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+        - ./proxy/certs:/etc/nginx/certs
+        - ./proxy/acme:/acmecerts
+        - ./proxy/conf.d:/etc/nginx/conf.d
+      network_mode: "host"
+```
+
 
 ### 2. Run an internal webserver
 
