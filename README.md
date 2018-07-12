@@ -25,8 +25,6 @@ It's recommended to run with `--net=host` option, like:
 
 ```sh
 docker run  \
--p 80:80 \
--p 443:443 \
 -it  -d --rm  \
 -v /var/run/docker.sock:/tmp/docker.sock:ro  \
 -v $(pwd)/proxy/certs:/etc/nginx/certs \
