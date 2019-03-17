@@ -11,6 +11,12 @@ CERTS="/etc/nginx/certs"
 
 
 updatessl() {
+  if [ -n "$DNS_PROVIDER" ]; then
+    PROVIDER_OPT="--dns $DNS_PROVIDER"
+  else
+    PROVIDER_OPT=--nginx
+  fi
+
   nginx -t && nginx -s reload
   if grep ACME_DOMAINS $DEFAULT_CONF ; then
     for d_list in $(grep ACME_DOMAINS $DEFAULT_CONF | cut -d ' ' -f 2);
@@ -18,7 +24,7 @@ updatessl() {
       d=$(echo "$d_list" | cut -d , -f 1)
       $ACME_BIN --issue \
       -d $d_list \
-      --nginx \
+      $PROVIDER_OPT \
       --fullchain-file "$CERTS/$d.crt" \
       --key-file "$CERTS/$d.key" \
       --reloadcmd "nginx -t && nginx -s reload"
@@ -32,9 +38,4 @@ updatessl() {
   nginx -t && nginx -s reload
 }
 
-
-
 "$@"
-
-
-
